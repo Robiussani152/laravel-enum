@@ -72,7 +72,7 @@ final class EnumCastTest extends ApplicationTestCase
         $model->user_type = 1;
         $this->assertEmpty($model->getChanges());
         $model->save();
-
+        $this->assertEmpty($model->getChanges());
         $this->assertEquals(UserType::Moderator(), $model->user_type);
     }
 }
