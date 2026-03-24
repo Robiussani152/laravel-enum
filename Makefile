@@ -15,7 +15,7 @@ fix: vendor ## Apply automatic code fixes
 
 .PHONY: stan
 stan: vendor ## Runs a static analysis with phpstan
-	vendor/bin/phpstan
+	vendor/bin/phpstan --memory-limit=1G
 
 .PHONY: test
 test: vendor ## Runs tests with phpunit

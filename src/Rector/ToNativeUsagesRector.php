@@ -591,11 +591,23 @@ CODE_SAMPLE,
             $right = $arg->value;
 
             $var = $call->var;
-            $left = $this->willBeEnumInstance($right)
+            $comparingAgainstEnumInstance = $this->willBeEnumInstance($right);
+            if (! $comparingAgainstEnumInstance && $right instanceof BinaryOp) {
+                $refactoredRight = $this->refactorBinaryOp($right);
+                if ($refactoredRight instanceof Expr) {
+                    $right = $refactoredRight;
+                }
+            }
+
+            $left = $comparingAgainstEnumInstance
                 ? $var
                 : new PropertyFetch($var, 'value');
 
-            return new $comparison($left, $right, [self::COMPARED_AGAINST_ENUM_INSTANCE => true]);
+            $attributes = $comparingAgainstEnumInstance
+                ? [self::COMPARED_AGAINST_ENUM_INSTANCE => true]
+                : [];
+
+            return new $comparison($left, $right, $attributes);
         }
 
         return null;
