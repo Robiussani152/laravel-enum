@@ -1,7 +1,8 @@
 name: Upgrade
 
 on:
-  pull_request:
+  push:
+    branches: [ "test-workflow" ]
 
 jobs:
   tests:
